@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import { DashboardProvider } from "@/context/DashboardContext";
+import { ReportDataProvider } from "@/context/ReportDataContext";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -28,7 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` ${montserrat.variable} antialiased`}>
-        <DashboardProvider>{children}</DashboardProvider>
+        <DashboardProvider>
+          {" "}
+          <ReportDataProvider>{children}</ReportDataProvider>
+        </DashboardProvider>
       </body>
     </html>
   );

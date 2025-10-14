@@ -1,7 +1,9 @@
-import ConversationalPaneWithSidebar from "@/components/ConversationalPanetwo";
+import ConversationalPane from "@/components/ConversationalPane";
 
 export default function Contextt() {
   return (
-    <ConversationalPaneWithSidebar />
+    <>
+      <ConversationalPane />
+    </>
   );
 }

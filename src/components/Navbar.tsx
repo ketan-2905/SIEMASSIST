@@ -4,12 +4,8 @@ import Link from "next/link";
 
 export default function Navbar() {
   const links = [
-    { name: "Home", path: "/" },
-    { name: "Landing", path: "/landing" },
-    { name: "Conversational Pane", path: "/contextt" },
-    { name: "Query Editor / Translator", path: "/queryeditortranslator" },
-    { name: "Results Workspace", path: "/resultsinvestigatorworkspace" },
-    { name: "Context Manager History", path: "/contextmanagerhistory" },
+    { name: "Conversational Pane", path: "/conversationalPane" },
+    { name: "Report", path: "/report" },
   ];
 
   return (
@@ -33,12 +29,7 @@ export default function Navbar() {
       </div>
 
       {/* Admin Button */}
-      <Link
-        href="/admin"
-        className="border border-white/20 rounded-full px-5 py-2 text-sm text-white hover:border-violet-300 hover:bg-white/10 transition"
-      >
-        🔐 Admin Login
-      </Link>
+     
     </nav>
   );
 }

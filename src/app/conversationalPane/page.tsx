@@ -1,9 +1,5 @@
-import ConversationalPane from "@/components/ConversationalPane";
+import ConversationalPaneWithSidebar from "@/components/ConversationalPanetwo";
 
 export default function ConversationalPanePage() {
-  return (
-    <>
-      <ConversationalPane />
-    </>
-  );
+  return <ConversationalPaneWithSidebar />;
 }

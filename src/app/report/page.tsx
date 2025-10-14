@@ -1,4 +1,4 @@
-import ReportGenerator from "@/components/ReportGenerator";
+import ReportGenerator from "@/components/ConversationalReport";
 
 export default function ReportPage() {
   return (
