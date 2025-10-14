@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
+import { DashboardProvider } from "@/context/DashboardContext";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -26,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${montserrat.variable} antialiased`}>{children}</body>
+      <body className={` ${montserrat.variable} antialiased`}>
+        <DashboardProvider>{children}</DashboardProvider>
+      </body>
     </html>
   );
 }

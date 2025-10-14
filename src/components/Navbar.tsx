@@ -6,7 +6,7 @@ export default function Navbar() {
   const links = [
     { name: "Home", path: "/" },
     { name: "Landing", path: "/landing" },
-    { name: "Conversational Pane", path: "/conversationalPane" },
+    { name: "Conversational Pane", path: "/contextt" },
     { name: "Query Editor / Translator", path: "/queryeditortranslator" },
     { name: "Results Workspace", path: "/resultsinvestigatorworkspace" },
     { name: "Context Manager History", path: "/contextmanagerhistory" },
