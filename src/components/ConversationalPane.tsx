@@ -2500,7 +2500,6 @@
 
 // export default ConversationalPaneWithSidebar;
 
-
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -2535,8 +2534,6 @@ type MessageStatus =
   | "running"
   | "done"
   | "error";
-
-  
 
 interface LogRow {
   "@timestamp": string;
@@ -2863,7 +2860,10 @@ const ConversationalPaneWithSidebar: React.FC = () => {
     return { valid, warnings, autofix: null };
   };
 
-  const generateMockLogs = (queryType: string, parentResults?: QueryResults): LogRow[] => {
+  const generateMockLogs = (
+    queryType: string,
+    parentResults?: QueryResults
+  ): LogRow[] => {
     const users = [
       "john",
       "admin",
@@ -2944,7 +2944,8 @@ const ConversationalPaneWithSidebar: React.FC = () => {
 
     return logs.sort(
       (a, b) =>
-        new Date(b["@timestamp"]).getTime() - new Date(a["@timestamp"]).getTime()
+        new Date(b["@timestamp"]).getTime() -
+        new Date(a["@timestamp"]).getTime()
     );
   };
 
@@ -2982,7 +2983,8 @@ const ConversationalPaneWithSidebar: React.FC = () => {
       ipCounts[r["source.ip"]] = (ipCounts[r["source.ip"]] || 0) + 1;
       if (r["user.name"])
         userCounts[r["user.name"]] = (userCounts[r["user.name"]] || 0) + 1;
-      if (r["host.name"]) hostCounts[r["host.name"]] = (hostCounts[r["host.name"]] || 0) + 1;
+      if (r["host.name"])
+        hostCounts[r["host.name"]] = (hostCounts[r["host.name"]] || 0) + 1;
     });
 
     const suspiciousIPs = Object.entries(ipCounts)
@@ -3026,7 +3028,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
 
       if (parsed.query?.bool?.must && Array.isArray(parsed.query.bool.must)) {
         parsed.query.bool.must.forEach((condition: Record<string, unknown>) => {
-          const termsCondition = condition.terms as Record<string, string[]> | undefined;
+          const termsCondition = condition.terms as
+            | Record<string, string[]>
+            | undefined;
           if (termsCondition?.["source.ip"]) {
             termsCondition["source.ip"].forEach((ip: string) => {
               entities.push({ type: "ip", value: ip });
@@ -3083,7 +3087,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
     const generatingMsg: Message = {
       id: assistantMsgId,
       role: "assistant",
-      content: `Generating ${isChained ? "chained " : ""}query for: "${userInput}"`,
+      content: `Generating ${
+        isChained ? "chained " : ""
+      }query for: "${userInput}"`,
       timestamp: new Date().toISOString(),
       status: "generating",
       parentId: isChained ? lastAssistantMsg?.id ?? null : null,
@@ -3153,9 +3159,15 @@ const ConversationalPaneWithSidebar: React.FC = () => {
     updateConversationMessages(runningMsgs);
 
     try {
-      const results = await runQuerySimulator(message.query, queryType, parentMessage);
+      const results = await runQuerySimulator(
+        message.query,
+        queryType,
+        parentMessage
+      );
       const doneMsgs = messages.map((m) =>
-        m.id === messageId ? { ...m, results, status: "done" as MessageStatus } : m
+        m.id === messageId
+          ? { ...m, results, status: "done" as MessageStatus }
+          : m
       );
       setMessages(doneMsgs);
       updateConversationMessages(doneMsgs);
@@ -3240,7 +3252,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
       <button
         key={`${entity.type}-${entity.value}`}
         onClick={() => setInput((prev) => `${prev}${entity.value} `)}
-        className={`inline-flex items-center px-2 py-1 rounded text-xs font-mono border ${colors[entity.type]} hover:brightness-110 transition-all mr-2 mb-2`}
+        className={`inline-flex items-center px-2 py-1 rounded text-xs font-mono border ${
+          colors[entity.type]
+        } hover:brightness-110 transition-all mr-2 mb-2`}
       >
         <span className="text-[10px] uppercase mr-1 opacity-70">
           {entity.type}
@@ -3391,30 +3405,34 @@ const ConversationalPaneWithSidebar: React.FC = () => {
         <div className="flex-none px-6 py-4 border-b border-gray-800 bg-gradient-to-r from-emerald-900/10 to-blue-900/10">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-white">Security Assistant</h2>
+              <h2 className="text-2xl font-bold text-white">
+                Security Assistant
+              </h2>
               <p className="text-sm text-gray-400 mt-1">
-                AI-powered SIEM investigation • Elasticsearch DSL • Query chaining
+                AI-powered SIEM investigation • Elasticsearch DSL • Query
+                chaining
               </p>
             </div>
-            
-           <div className="flex justify-between items-center gap-2"><select
-        className="bg-gray-800 text-gray-300 text-sm rounded-md px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        defaultValue=""
-      >
-        <option value="" disabled>
-          Select Role
-        </option>
-        <option value="soc">SOC Analyst</option>
-        <option value="ciso">CISO</option>
-        <option value="ir">Incident Responder</option>
-        <option value="audit">Compliance / Audit Officer</option>
-      </select>
-             <div className="text-xs text-gray-500 bg-gray-800 h-9 px-4 rounded flex items-center border border-gray-700 hover:border-gray-500 transition-colors">
+
+            <div className="flex justify-between items-center gap-2">
+              <select
+                className="bg-gray-800 text-gray-300 text-sm rounded-md px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
+                <option value="soc">SOC Analyst</option>
+                <option value="ciso">CISO</option>
+                <option value="ir">Incident Responder</option>
+                <option value="audit">Compliance / Audit Officer</option>
+              </select>
               <Link href="/">
-                <Home size={16} className="inline-block mr-1" />
+                <div className="text-xs text-gray-500 bg-gray-800 h-9 px-4 rounded flex items-center border border-gray-700 hover:border-gray-500 transition-colors">
+                  <Home size={16} className="inline-block mr-1" />
+                </div>
               </Link>
             </div>
-           </div>
           </div>
         </div>
 
@@ -3427,8 +3445,8 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                   Start Your Security Investigation
                 </h3>
                 <p className="text-gray-400 text-sm mb-4">
-                  Ask me to search for security events, analyze logs, or generate
-                  Elasticsearch DSL queries with chaining.
+                  Ask me to search for security events, analyze logs, or
+                  generate Elasticsearch DSL queries with chaining.
                 </p>
               </div>
             </div>
@@ -3512,7 +3530,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
 
                         <button
                           onClick={() =>
-                            setExpandedQuery(expandedQuery === message.id ? null : message.id)
+                            setExpandedQuery(
+                              expandedQuery === message.id ? null : message.id
+                            )
                           }
                           className="text-gray-400 hover:text-gray-300 transition-colors"
                         >
@@ -3532,7 +3552,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
 
                           <div className="absolute top-2 right-2">
                             <button
-                              onClick={() => handleCopyQuery(message.query!, message.id)}
+                              onClick={() =>
+                                handleCopyQuery(message.query!, message.id)
+                              }
                               className="p-1.5 bg-gray-800 hover:bg-gray-700 rounded transition-colors"
                               title="Copy query"
                             >
@@ -3550,16 +3572,24 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                                 message.validation.warnings.length > 0)) && (
                               <div className="mt-3">
                                 <div className="flex items-start space-x-2 bg-yellow-900/30 border border-yellow-700 rounded p-2">
-                                  <AlertTriangle size={14} className="text-yellow-300 mt-0.5" />
+                                  <AlertTriangle
+                                    size={14}
+                                    className="text-yellow-300 mt-0.5"
+                                  />
                                   <div className="flex-1">
                                     <div className="font-semibold text-yellow-200 text-xs">
                                       Validation warnings
                                     </div>
-                                    {message.validation.warnings?.map((w, i) => (
-                                      <div key={i} className="text-yellow-100 text-xs mt-1">
-                                        • {w}
-                                      </div>
-                                    ))}
+                                    {message.validation.warnings?.map(
+                                      (w, i) => (
+                                        <div
+                                          key={i}
+                                          className="text-yellow-100 text-xs mt-1"
+                                        >
+                                          • {w}
+                                        </div>
+                                      )
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -3568,13 +3598,18 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                       )}
 
                       <div className="flex space-x-2 mt-3">
-                        {message.status === "ready" || message.status === "running" ? (
+                        {message.status === "ready" ||
+                        message.status === "running" ? (
                           <button
                             onClick={() => handleRunQuery(message.id)}
                             disabled={message.status === "running"}
                             className="flex items-center space-x-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white text-xs rounded transition-colors"
                           >
-                            <span>{message.status === "running" ? "Running..." : "Run query"}</span>
+                            <span>
+                              {message.status === "running"
+                                ? "Running..."
+                                : "Run query"}
+                            </span>
                           </button>
                         ) : (
                           ""
@@ -3584,11 +3619,14 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                         ) : (
                           <button
                             onClick={() =>
-                              setExpandedQuery(expandedQuery === message.id ? null : message.id)
+                              setExpandedQuery(
+                                expandedQuery === message.id ? null : message.id
+                              )
                             }
                             className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors"
                           >
-                            {expandedQuery === message.id ? "Hide" : "Edit"} Query
+                            {expandedQuery === message.id ? "Hide" : "Edit"}{" "}
+                            Query
                           </button>
                         )}
 
@@ -3597,20 +3635,30 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                         ) : (
                           <button
                             onClick={() => {
-                              setIsgeneratingReport({ id: message.id, isGenerateing: false });
+                              setIsgeneratingReport({
+                                id: message.id,
+                                isGenerateing: false,
+                              });
                               setTimeout(() => {
                                 if (message.results?.rows && setVpnData) {
-                                  setVpnData(message.results.rows as RawVPNData[]);
+                                  setVpnData(
+                                    message.results.rows as RawVPNData[]
+                                  );
                                 }
                                 router.push(`/report/${message.id}`);
                                 setIsgeneratingReport(null);
                               }, 2000);
                             }}
                             className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-xs text-gray-300"
-                            disabled={message.status !== "done" || isgeneratingReport?.isGenerateing}
+                            disabled={
+                              message.status !== "done" ||
+                              isgeneratingReport?.isGenerateing
+                            }
                           >
                             <Layers size={14} className="inline-block mr-1" />
-                            {isgeneratingReport?.id === message.id ? "Generating Report..." : "Generate Report"}
+                            {isgeneratingReport?.id === message.id
+                              ? "Generating Report..."
+                              : "Generate Report"}
                           </button>
                         )}
                       </div>
@@ -3622,8 +3670,12 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                       <div className="bg-[#08090b] p-4 rounded border border-emerald-900/30 shadow-lg">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center space-x-3">
-                            <div className="text-sm font-mono text-emerald-400">POST /_search</div>
-                            <div className="text-xs text-gray-500">qid: {message.queryId}</div>
+                            <div className="text-sm font-mono text-emerald-400">
+                              POST /_search
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              qid: {message.queryId}
+                            </div>
                             <div className="text-xs text-gray-400 bg-gray-800 px-2 py-0.5 rounded">
                               {message.results.execution_ms} ms
                             </div>
@@ -3632,7 +3684,12 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() =>
-                                handleCopyCommand(`POST /_search\n${message.query?.slice(0, 500) ?? ""}`, message.id)
+                                handleCopyCommand(
+                                  `POST /_search\n${
+                                    message.query?.slice(0, 500) ?? ""
+                                  }`,
+                                  message.id
+                                )
                               }
                               className="p-1.5 rounded bg-gray-800 hover:bg-gray-700 transition-colors"
                               title="Copy command"
@@ -3646,7 +3703,10 @@ const ConversationalPaneWithSidebar: React.FC = () => {
 
                             <button
                               onClick={() =>
-                                handleDownloadCSV(message.results!.rows, `results_${message.queryId ?? "export"}.csv`)
+                                handleDownloadCSV(
+                                  message.results!.rows,
+                                  `results_${message.queryId ?? "export"}.csv`
+                                )
                               }
                               className="p-1.5 rounded bg-gray-800 hover:bg-gray-700 transition-colors"
                               title="Download CSV"
@@ -3659,13 +3719,21 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                         <div className="mb-3 flex items-center space-x-4">
                           <div className="text-xs text-gray-400">
                             Total hits:{" "}
-                            <span className="font-semibold text-white">{message.results.total_hits}</span>
+                            <span className="font-semibold text-white">
+                              {message.results.total_hits}
+                            </span>
                           </div>
                           <div className="text-xs text-gray-400">
-                            Failed: <span className="font-semibold text-red-400">{message.results.failed}</span>
+                            Failed:{" "}
+                            <span className="font-semibold text-red-400">
+                              {message.results.failed}
+                            </span>
                           </div>
                           <div className="text-xs text-gray-400">
-                            Success: <span className="font-semibold text-green-400">{message.results.success}</span>
+                            Success:{" "}
+                            <span className="font-semibold text-green-400">
+                              {message.results.success}
+                            </span>
                           </div>
                         </div>
 
@@ -3678,7 +3746,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                         </div>
 
                         <div className="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between">
-                          <div className="text-xs text-gray-500">Executed: {new Date().toLocaleString()}</div>
+                          <div className="text-xs text-gray-500">
+                            Executed: {new Date().toLocaleString()}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -3710,7 +3780,9 @@ const ConversationalPaneWithSidebar: React.FC = () => {
               />
               {disabledInput && (
                 <div className="absolute inset-0 bg-gray-900/50 rounded-lg flex items-center justify-center">
-                  <div className="text-xs text-gray-400 animate-pulse">Generating query...</div>
+                  <div className="text-xs text-gray-400 animate-pulse">
+                    Generating query...
+                  </div>
                 </div>
               )}
             </div>

@@ -1724,11 +1724,11 @@ export default function ReportGenerator() {
                 Generate, visualize, and export analytical security reports.
               </p>
             </div>
-            <div className="text-xs text-gray-500 bg-gray-800 h-9 px-4 rounded flex items-center border border-gray-700 hover:border-gray-500 transition-colors">
-              <Link href="/">
-                <Home size={16} className="inline-block mr-1" />
+           <Link href="/">
+                <div className="text-xs text-gray-500 bg-gray-800 h-9 px-4 rounded flex items-center border border-gray-700 hover:border-gray-500 transition-colors">
+                  <Home size={16} className="inline-block mr-1" />
+                </div>
               </Link>
-            </div>
           </div>
         </div>
 
