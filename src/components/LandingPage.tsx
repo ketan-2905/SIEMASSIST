@@ -175,13 +175,11 @@ export default function LandingPage() {
 
         <div className="relative z-20">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
-            Conversational SIEM Assistant
-            <br /> for Security Investigations
+            Niriksha - A Conversational SIEM Assistant
+            {/* <br /> for Security Investigations */}
           </h1>
           <p className="text-white/70 max-w-xl mx-auto mb-10 text-base">
-            Use natural language to investigate security events and generate
-            automated threat reports. Integrated with Elastic SIEM and Wazuh -
-            no complex queries required.
+            Integrating AI to Elastic SIEM and Wuzuh to automate and generate queries and threat reports
           </p>
 
           <Link href="/conversationalPane"><button className="group relative dark:bg-neutral-800 bg-neutral-200 rounded-full p-px overflow-hidden">
@@ -353,8 +351,8 @@ export default function LandingPage() {
         {[
           {
             src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=800&fit=crop",
-            title: "Threat Dashboard",
-            description: "Real-time security monitoring",
+            title: " Automate query",
+            description: " Using natural language",
             tilt: "rotate-2",
             borderTop: "border-t-[8px]",
           },

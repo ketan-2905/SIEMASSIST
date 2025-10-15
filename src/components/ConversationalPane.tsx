@@ -3289,20 +3289,15 @@ const ConversationalPaneWithSidebar: React.FC = () => {
     return (
       <div className="mt-4 pt-4 border-t border-gray-700">
         <button
-          onClick={() => toggleAnalysis(message.id)}
+          // onClick={() => toggleAnalysis(message.id)}
           className="flex items-center space-x-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 mb-2"
         >
           <BarChart3 size={16} />
           <span>Security Analysis</span>
-          <ChevronDown
-            size={16}
-            className={`transform transition-transform ${
-              showAnalysis[message.id] ? "rotate-180" : ""
-            }`}
-          />
+          
         </button>
 
-        {showAnalysis[message.id] && (
+        {/* {showAnalysis[message.id] && (
           <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
             {message.analysis && (
               <div className="mb-4">
@@ -3346,7 +3341,50 @@ const ConversationalPaneWithSidebar: React.FC = () => {
               </div>
             )}
           </div>
-        )}
+        )} */}
+        <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+          {message.analysis && (
+            <div className="mb-4">
+              <h4 className="text-sm font-semibold text-gray-300 mb-2">
+                Query Purpose:
+              </h4>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                {message.analysis}
+              </p>
+            </div>
+          )}
+
+          {message.results?.analysis && (
+            <div>
+              <h4 className="text-sm font-semibold text-gray-300 mb-2">
+                Results Analysis:
+              </h4>
+              <div className="grid grid-cols-2 gap-4 text-xs">
+                <div className="bg-gray-800/50 p-3 rounded">
+                  <div className="text-gray-400">Total Events</div>
+                  <div className="text-white font-mono">
+                    {message.results.analysis.total_events}
+                  </div>
+                </div>
+                <div className="bg-gray-800/50 p-3 rounded">
+                  <div className="text-gray-400">Failure Rate</div>
+                  <div className="text-red-400 font-mono">
+                    {message.results.analysis.failure_rate}%
+                  </div>
+                </div>
+
+                {message.results.analysis.most_active_users?.length > 0 && (
+                  <div className="col-span-2 bg-gray-800/50 p-3 rounded">
+                    <div className="text-gray-400">Most Active Users</div>
+                    <div className="text-cyan-400 font-mono text-xs mt-1">
+                      {message.results.analysis.most_active_users.join(", ")}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     );
   };
@@ -3716,34 +3754,49 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                           </div>
                         </div>
 
-                        <div className="mb-3 flex items-center space-x-4">
-                          <div className="text-xs text-gray-400">
-                            Total hits:{" "}
-                            <span className="font-semibold text-white">
-                              {message.results.total_hits}
-                            </span>
+                        <div className="mb-3 flex items-center space-x-4 justify-between">
+                          <div className="flex space-x-4">
+                            <div className="text-xs text-gray-400">
+                              Total hits:{" "}
+                              <span className="font-semibold text-white">
+                                {message.results.total_hits}
+                              </span>
+                            </div>
+                            <div className="text-xs text-gray-400">
+                              Failed:{" "}
+                              <span className="font-semibold text-red-400">
+                                {message.results.failed}
+                              </span>
+                            </div>
+                            <div className="text-xs text-gray-400">
+                              Success:{" "}
+                              <span className="font-semibold text-green-400">
+                                {message.results.success}
+                              </span>
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-400">
-                            Failed:{" "}
-                            <span className="font-semibold text-red-400">
-                              {message.results.failed}
-                            </span>
-                          </div>
-                          <div className="text-xs text-gray-400">
-                            Success:{" "}
-                            <span className="font-semibold text-green-400">
-                              {message.results.success}
-                            </span>
-                          </div>
+                          <button
+                            onClick={() => toggleAnalysis(message.id)}
+                            className="flex items-center space-x-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 mb-2"
+                          >
+                            <span>Query Result</span>
+                            <ChevronDown
+                              size={16}
+                              className={`transform transition-transform ${
+                                showAnalysis[message.id] ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
                         </div>
 
-                        <div className="overflow-x-auto max-h-96">
+                                {showAnalysis[message.id] && (<div className="overflow-x-auto max-h-96">
                           <div className="overflow-x-auto max-h-96">
                             <pre className="text-xs text-gray-300 bg-gray-900/50 p-3 rounded overflow-x-auto">
                               {JSON.stringify(message.results.rows, null, 2)}
                             </pre>
                           </div>
                         </div>
+                                )}
 
                         <div className="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between">
                           <div className="text-xs text-gray-500">

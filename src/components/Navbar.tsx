@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="flex justify-between items-center py-5 px-12 relative z-10 bg-transparent">
       {/* Logo / Title */}
       <div className="text-lg font-semibold tracking-wider text-white">
-        SIEMASSIST<span className="text-violet-400">.</span>
+        NIRIKSHA
       </div>
 
       {/* Navigation Links */}
