@@ -389,14 +389,7 @@ export default function LandingPage() {
             <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
               <h3 className="font-bold text-lg mb-2 text-white">{art.title}</h3>
               <p className="text-white/80 text-sm mb-3">{art.description}</p>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
-                  <Activity className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-xs text-cyan-300 font-medium">
-                  ISRO Certified
-                </span>
-              </div>
+              
             </div>
 
             {/* Top boundary effect */}

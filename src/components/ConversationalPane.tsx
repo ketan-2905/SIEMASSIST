@@ -3396,11 +3396,25 @@ const ConversationalPaneWithSidebar: React.FC = () => {
                 AI-powered SIEM investigation • Elasticsearch DSL • Query chaining
               </p>
             </div>
-            <div className="text-xs text-gray-500 bg-gray-800 px-3 py-1 rounded">
+            
+           <div className="flex justify-between items-center gap-2"><select
+        className="bg-gray-800 text-gray-300 text-sm rounded-md px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Select Role
+        </option>
+        <option value="soc">SOC Analyst</option>
+        <option value="ciso">CISO</option>
+        <option value="ir">Incident Responder</option>
+        <option value="audit">Compliance / Audit Officer</option>
+      </select>
+             <div className="text-xs text-gray-500 bg-gray-800 h-9 px-4 rounded flex items-center border border-gray-700 hover:border-gray-500 transition-colors">
               <Link href="/">
                 <Home size={16} className="inline-block mr-1" />
               </Link>
             </div>
+           </div>
           </div>
         </div>
 
